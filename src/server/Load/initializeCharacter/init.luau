@@ -45,7 +45,7 @@ return function(Player: Player)
 			end
 		end
 		local Humanoid = Character:FindFirstChild("Humanoid") :: Humanoid
-		Humanoid.JumpHeight = 0
+		Humanoid.JumpHeight = 7.1
 		local HumanoidRootPart = Character:FindFirstChild("HumanoidRootPart")
 		Player.RootCFrame.Value = HumanoidRootPart.CFrame
 		for _Index, AnimationSound in pairs(ReplicatedStorage.AnimationObjects:GetChildren()) do

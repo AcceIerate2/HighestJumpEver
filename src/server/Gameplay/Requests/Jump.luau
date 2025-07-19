@@ -94,7 +94,7 @@ return function(Player: Player)
 				task.wait()
 			until HumanoidRootPart.Velocity.Y < 0 or Character:GetAttribute("JumpEnded") == true
 			Character:SetAttribute("JumpEnded", false)
-			Humanoid.JumpHeight = 0
+			Humanoid.JumpHeight = 7.1
 			local CashToGive = HumanoidRootPart.Position.Y / 3.5
 			local DoubleCash = Player:FindFirstChild("DoubleCash")
 			local ExtraMultiplier = 1
