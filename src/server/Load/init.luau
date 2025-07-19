@@ -1,3 +1,4 @@
+local HttpService = game:GetService("HttpService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local EventsFolder = ReplicatedStorage.Events
 local RemoteEventsFolder = EventsFolder.RemoteEvents
@@ -26,6 +27,18 @@ local function DataSaveLoop(Player: Player)
 		end
 	end)
 end
+
+local function OwnsDrink(Player: Player, DrinkName: string): boolean
+	if not Player or not DrinkName then
+		return false
+	end
+	local OwnedDrinks = HttpService:JSONDecode(Player.Drinks.Value)
+	if typeof(OwnedDrinks) == "table" then
+		return not (table.find(OwnedDrinks, DrinkName) == nil)
+	end
+	return false
+end
+
 return function(Player: Player)
 	local LoadingScreenProgress = InstanceCreatorModule("NumberValue", "LoadingScreenProgress", Player)
 	CharacterModule(Player)
@@ -36,6 +49,12 @@ return function(Player: Player)
 		local DataSynced = DataRequestsModule("Get", Player) :: boolean
 		if typeof(DataSynced) == "boolean" and DataSynced == true then
 			OfflineProgress(Player)
+
+			local OwnsLightningPotion = OwnsDrink(Player, "Lightning Potion")
+			if OwnsLightningPotion then
+				Player.ClaimedFreeDrink.Value = true
+			end
+
 			InstanceCreatorModule("BoolValue", "DataSynced", Player)
 			LoadingScreenProgress.Value = 0.75
 			DataSaveLoop(Player)

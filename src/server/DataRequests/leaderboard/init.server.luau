@@ -19,7 +19,7 @@ local _Thread = task.spawn(function()
 		DisplayModule(RebirthData, "Rebirths")
 		DisplayModule(AltitudeData, "HighestAltitude")
 		ReplicatedStorage.Events.BindableEvents.LdbCountdown:Fire()
-		for _Index = 90, 1, -1 do
+		for _Index = 120, 1, -1 do
 			task.wait(1)
 		end
 	end

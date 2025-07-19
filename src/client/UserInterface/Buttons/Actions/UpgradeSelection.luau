@@ -1,7 +1,37 @@
+local HttpService = game:GetService("HttpService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local SoundService = game:GetService("SoundService")
 local Upgrades = require(ReplicatedStorage:WaitForChild("UpgradeData"))
 
-local HttpService = game:GetService("HttpService")
+local TweenService = game:GetService("TweenService")
+local TweenConfiguration = TweenInfo.new(0.11, Enum.EasingStyle.Linear, Enum.EasingDirection.Out, 0, true, 0)
+
+local function ToggleViewAnimation(Frame: Frame)
+	Frame.Size = Frame:GetAttribute("Size") :: UDim2
+	local SizeX = Frame.Size.X.Scale / 1.1
+	local SizeY = Frame.Size.Y.Scale / 1.1
+	local SmallerSize = UDim2.fromScale(SizeX, SizeY)
+	local Tween = TweenService:Create(Frame, TweenConfiguration, {
+		["Size"] = SmallerSize,
+	})
+	Tween:Play()
+end
+
+local function ResetSelectionBtns(CanvasGroup: CanvasGroup)
+	if not CanvasGroup then
+		return
+	end
+	local SelectionFrame = CanvasGroup:WaitForChild("Frame"):WaitForChild("ScrollingFrame")
+	for _Index, Frame in pairs(SelectionFrame:GetChildren()) do
+		if Frame:IsA("GuiButton") then
+			local UIStroke = Frame:FindFirstChild("UIStroke")
+			if UIStroke then
+				UIStroke.Color = Color3.fromRGB(0, 0, 0)
+			end
+		end
+	end
+end
+
 local function Update(Name: string, Player: Player, PlayerGui: PlayerGui, init: boolean)
 	local CanvasGroup = PlayerGui:WaitForChild("Frames"):WaitForChild("Upgrades"):WaitForChild("Frame")
 	local ViewingFrame = CanvasGroup:WaitForChild("View")
@@ -39,6 +69,18 @@ local function Update(Name: string, Player: Player, PlayerGui: PlayerGui, init: 
 		ViewingFrame:WaitForChild("Description").Text = Description
 		ViewingFrame:WaitForChild("Title"):WaitForChild("TextLabel").Text = Name
 		ViewingFrame:WaitForChild("Upgrade"):SetAttribute("SelectedUpgrade", Name)
+
+		ResetSelectionBtns(CanvasGroup)
+		local UpgradeSelectionBtn =
+			CanvasGroup:WaitForChild("Frame"):WaitForChild("ScrollingFrame"):FindFirstChild(Name)
+		if UpgradeSelectionBtn then
+			local UIStroke = UpgradeSelectionBtn:FindFirstChild("UIStroke")
+			if UIStroke then
+				UIStroke.Color = Color3.fromRGB(255, 255, 255)
+			end
+		end
+		SoundService:WaitForChild("SelectUpgrade"):Play()
+		ToggleViewAnimation(ViewingFrame)
 	end
 end
 

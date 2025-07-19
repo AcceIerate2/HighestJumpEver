@@ -12,5 +12,8 @@ return {
 	{ 10000000000000, "Event Horizon" },
 	{ 10000000000000000, "The Shattered Beyond" },
 	{ 1000000000000000000, "Eternium Expanse" },
-	{ 50e50, "WIP" },
+	{ 100000000000000000000, "Helion Expanse" },
+	{ 1000000000000000000000, "The Veil of Orin" },
+	{ 1e23, "Oblivion Glacier" },
+	{ 99e99, "Enchanting world..." },
 }

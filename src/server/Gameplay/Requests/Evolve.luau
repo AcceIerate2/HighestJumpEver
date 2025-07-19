@@ -4,6 +4,7 @@ local EvolutionBadgeIds = {
 }
 local BadgeService = game:GetService("BadgeService")
 local HttpService = game:GetService("HttpService")
+
 local function ResetPlayer(Player: Player)
 	for Index, SavableOBJ in pairs(Player:GetChildren()) do
 		if SavableOBJ:IsA("ValueBase") and SavableOBJ:HasTag("Savable") == true then
@@ -17,6 +18,12 @@ local function ResetPlayer(Player: Player)
 						end
 						if Player.StarterPack.Value == true then
 							table.insert(DrinkInventory, "FireBlade Potion")
+						end
+						if Player.ClaimedFreeDrink.Value == true then
+							table.insert(DrinkInventory, "Lightning Potion")
+						end
+						if Player.CoconutDrink.Value == true then
+							table.insert(DrinkInventory, "Coconut Drink")
 						end
 						SavableOBJ.Value = HttpService:JSONEncode(DrinkInventory)
 					end

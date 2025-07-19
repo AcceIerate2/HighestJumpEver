@@ -5,6 +5,7 @@ local RebirthBadgeIds = {
 
 local BadgeService = game:GetService("BadgeService")
 local HttpService = game:GetService("HttpService")
+
 return function(Player: Player)
 	if Player == nil or typeof(Player) ~= "Instance" and not Player:IsA("Player") then
 		return false, "Something went wrong... try again!", Color3.fromRGB(255, 0, 0)
@@ -25,6 +26,12 @@ return function(Player: Player)
 				end
 				if Player.Vip.Value == true then
 					table.insert(DrinkInventory, "Exclusive Potion")
+				end
+				if Player.ClaimedFreeDrink.Value == true then
+					table.insert(DrinkInventory, "Lightning Potion")
+				end
+				if Player.CoconutDrink.Value == true then
+					table.insert(DrinkInventory, "Coconut Drink")
 				end
 				Player.Drinks.Value = HttpService:JSONEncode(DrinkInventory)
 			end

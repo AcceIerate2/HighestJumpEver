@@ -151,6 +151,7 @@ local function RequestUsername(Key: number)
 	return Status, Response
 end
 local CollectionService = game:GetService("CollectionService")
+local MaxNumberHandler = require(script.Parent.MaxNumberHandler)
 local function Display(MainData: {}, LeaderboardType: string)
 	local ScrollingFrame = CollectionService:GetTagged(`{LeaderboardType}_LDB`)[1]
 	if not ScrollingFrame then
@@ -165,12 +166,43 @@ local function Display(MainData: {}, LeaderboardType: string)
 	if not Template then
 		return false
 	end
+
+	for _Rank, Data in pairs(MainData) do
+		local Key = Data.key
+		if table.find(DisabledKeyNumbers, Key) or tonumber(Key) < 1000 then
+			continue
+		end
+		local _Value = Data.value
+		local ValueName = LeaderboardType
+		if LeaderboardType == "HighestAltitude" then
+			ValueName = "HighestJump"
+		end
+		local SavedAsAHugeNumber = MaxNumberHandler(false, Key, ValueName)
+		if typeof(SavedAsAHugeNumber) == "number" then
+			_Value = SavedAsAHugeNumber
+		end
+		Data.value = _Value
+	end
+
+	table.sort(MainData, function(a, b)
+		return a.value > b.value
+	end)
+
 	for Rank, Data in pairs(MainData) do
 		local Key = Data.key
 		if table.find(DisabledKeyNumbers, Key) or tonumber(Key) < 1000 then
 			continue
 		end
 		local Value = Data.value
+		local ValueName = LeaderboardType
+		if LeaderboardType == "HighestAltitude" then
+			ValueName = "HighestJump"
+		end
+		local SavedAsAHugeNumber = MaxNumberHandler(false, Key, ValueName)
+		if typeof(SavedAsAHugeNumber) == "number" then
+			Value = SavedAsAHugeNumber
+		end
+
 		local Username = "loading.."
 		for Index = MaxRetires, 1, -1 do
 			local Status, Response = RequestUsername(tonumber(Key))

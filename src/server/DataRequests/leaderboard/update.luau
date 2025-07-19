@@ -1,3 +1,5 @@
+local DataStoreService = game:GetService("DataStoreService")
+local MaxNumberHandler = require(script.Parent.MaxNumberHandler)
 local function isInteger(n)
 	return typeof(n) == "number" and n % 1 == 0
 end
@@ -7,7 +9,7 @@ local function Request(DataStore: OrderedDataStore, Key: string, Player: Player,
 		local Value = nil
 		if ValueName == "HighestAltitude" then
 			ValueName = "HighestJump"
-			local Value = Player["HighestJump"].Value
+			Value = Player["HighestJump"].Value
 			if not isInteger(Value) then
 				Value = math.floor(Value)
 			end
@@ -18,6 +20,27 @@ local function Request(DataStore: OrderedDataStore, Key: string, Player: Player,
 			end
 		else
 			Value = Player[ValueName].Value
+		end
+		if typeof(Value) == "number" then
+			if Value >= 9e18 then
+				Value = math.floor(Value / 1e8)
+				MaxNumberHandler(true, Key, ValueName)
+			else
+				if ValueName == "HighestJump" or ValueName == "Cash" then
+					if MaxNumberHandler(false, Key, ValueName) ~= nil then
+						for _Index = 3, 1, -1 do
+							local _Status, _Response = pcall(function()
+								DataStoreService:GetDataStore(ValueName):RemoveAsync(Key)
+							end)
+							if _Status == true then
+								break
+							else
+								warn(_Response)
+							end
+						end
+					end
+				end
+			end
 		end
 		DataStore:SetAsync(Key, Value)
 	end)

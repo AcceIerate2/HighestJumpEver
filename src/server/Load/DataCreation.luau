@@ -140,6 +140,8 @@ local function main(Parent: Instance): boolean
 	InstanceCreatorModule("BoolValue", "Vip", Parent):AddTag("Savable")
 	InstanceCreatorModule("BoolValue", "DoubleOfflineGains", Parent):AddTag("Savable")
 	InstanceCreatorModule("BoolValue", "DoubleDrinkSpeed", Parent):AddTag("Savable")
+	InstanceCreatorModule("BoolValue", "ClaimedFreeDrink", Parent):AddTag("Savable")
+	InstanceCreatorModule("BoolValue", "CoconutDrink", Parent):AddTag("Savable")
 	return true
 end
 return function(Player: Player): boolean
