@@ -1,0 +1,16 @@
+return {
+	{ 0, "Ground" },
+	{ 3000, "Cloud Zone" },
+	{ 20000, "Orbit Zone" },
+	{ 100000, "Moon Zone" },
+	{ 225000, "Meteor Zone" },
+	{ 575000, "Titan Zone" },
+	{ 2000000, "Nebula Zone" },
+	{ 10000000, "Core Zone" },
+	{ 500000000, "Void Zone" },
+	{ 1023000000, "Echo Peak" },
+	{ 10000000000000, "Event Horizon" },
+	{ 10000000000000000, "The Shattered Beyond" },
+	{ 1000000000000000000, "Eternium Expanse" },
+	{ 50e50, "WIP" },
+}

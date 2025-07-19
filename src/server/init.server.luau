@@ -1,0 +1,5 @@
+local LoadModule = require(script.Load)
+local UnloadModule = require(script.Unload)
+local PlayerService = game:GetService("Players")
+PlayerService.PlayerAdded:Connect(LoadModule)
+PlayerService.PlayerRemoving:Connect(UnloadModule)
