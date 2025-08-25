@@ -1,7 +1,7 @@
 local HttpService = game:GetService("HttpService")
 local Module = {}
 
-Module.WEB_SERVER_URL = "https://bloxpulse-b938dced93ce.herokuapp.com/Schedule"
+Module.WEB_SERVER_URL = "https://bloxpulsedbserver.pythonanywhere.com/schedule"
 Module.universeId = 7549141947
 Module.api_key = require(script.API_KEY)
 
